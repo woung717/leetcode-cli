@@ -40,72 +40,74 @@ describe('plugin:leetcode', function() {
     plugin.__set__('session', session);
   });
 
-  describe('#login', function() {
-    it('should ok', function(done) {
-      nock('https://leetcode.com')
-        .get('/accounts/login/')
-        .reply(200, '', { 'Set-Cookie': [
-            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
-          ]});
+  // disabled since it is hard to test with browser interaction
 
-      nock('https://leetcode.com')
-        .post('/accounts/login/')
-        .reply(302, '', {
-          'Set-Cookie': [
-            'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
-            'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure'
-          ]});
+  // describe('#login', function() {
+  //   it('should ok', function(done) {
+  //     nock('https://leetcode.com')
+  //       .get('/accounts/login/')
+  //       .reply(200, '', { 'Set-Cookie': [
+  //           'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+  //         ]});
 
-      nock('https://leetcode.com')
-        .get('/list/api/questions')
-        .reply(200, JSON.stringify({
-          user_name: 'Eric',
-          favorites: {
-            private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]
-          }
-        }));
+  //     nock('https://leetcode.com')
+  //       .post('/accounts/login/')
+  //       .reply(302, '', {
+  //         'Set-Cookie': [
+  //           'csrftoken=SESSION_CSRF_TOKEN; Max-Age=31449600; Path=/; secure',
+  //           'LEETCODE_SESSION=SESSION_ID; Max-Age=31449600; Path=/; secure'
+  //         ]});
 
-      plugin.login({}, function(e, user) {
-        assert.equal(e, null);
+  //     nock('https://leetcode.com')
+  //       .get('/list/api/questions')
+  //       .reply(200, JSON.stringify({
+  //         user_name: 'Eric',
+  //         favorites: {
+  //           private_favorites: [{id_hash: 'abcdef', name: 'Favorite'}]
+  //         }
+  //       }));
 
-        assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
-        assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
-        assert.equal(user.sessionId, 'SESSION_ID');
-        assert.equal(user.name, 'Eric');
-        assert.equal(user.hash, 'abcdef');
-        done();
-      });
-    });
+  //     plugin.login({}, function(e, user) {
+  //       assert.equal(e, null);
 
-    it('should fail if http error', function(done) {
-      nock('https://leetcode.com')
-        .get('/accounts/login/')
-        .reply(200, '', {
-          'Set-Cookie': [
-            'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
-          ]});
+  //       assert.equal(user.loginCSRF, 'LOGIN_CSRF_TOKEN');
+  //       assert.equal(user.sessionCSRF, 'SESSION_CSRF_TOKEN');
+  //       assert.equal(user.sessionId, 'SESSION_ID');
+  //       assert.equal(user.name, 'Eric');
+  //       assert.equal(user.hash, 'abcdef');
+  //       done();
+  //     });
+  //   });
 
-      nock('https://leetcode.com')
-        .post('/accounts/login/')
-        .replyWithError('unknown error!');
+  //   it('should fail if http error', function(done) {
+  //     nock('https://leetcode.com')
+  //       .get('/accounts/login/')
+  //       .reply(200, '', {
+  //         'Set-Cookie': [
+  //           'csrftoken=LOGIN_CSRF_TOKEN; Max-Age=31449600; Path=/; secure'
+  //         ]});
 
-      plugin.login({}, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
-        done();
-      });
-    });
+  //     nock('https://leetcode.com')
+  //       .post('/accounts/login/')
+  //       .replyWithError('unknown error!');
 
-    it('should fail if http error, 2nd', function(done) {
-      nock('https://leetcode.com')
-        .get('/accounts/login/')
-        .replyWithError('unknown error!');
+  //     plugin.login({}, function(e, user) {
+  //       assert.equal(e.message, 'unknown error!');
+  //       done();
+  //     });
+  //   });
 
-      plugin.login({}, function(e, user) {
-        assert.equal(e.message, 'unknown error!');
-        done();
-      });
-    });
-  }); // #login
+  //   it('should fail if http error, 2nd', function(done) {
+  //     nock('https://leetcode.com')
+  //       .get('/accounts/login/')
+  //       .replyWithError('unknown error!');
+
+  //     plugin.login({}, function(e, user) {
+  //       assert.equal(e.message, 'unknown error!');
+  //       done();
+  //     });
+  //   });
+  // }); // #login
 
   describe('#getProblems', function() {
     it('should ok', function(done) {

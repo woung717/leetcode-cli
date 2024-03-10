@@ -5,6 +5,9 @@ module.exports = {
       "mocha": true,
       "node": true
     },
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
     "extends": [
       "google",
       "eslint:recommended"

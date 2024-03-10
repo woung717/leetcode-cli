@@ -9,6 +9,7 @@
     "leetcode": "./bin/leetcode"
   },
   "scripts": {
+    "start:login": "node bin/leetcode user -l",
     "lint": "eslint lib/ test/",
     "test": "npm run lint && nyc mocha test test/plugins && nyc report --reporter=lcov",
     "travis": "node bin/pkg",
@@ -57,6 +58,7 @@
     "nconf": "^0.11.2",
     "ora": "3.0.0",
     "prompt": "1.0.0",
+    "puppeteer": "^22.4.1",
     "request": "2.88.0",
     "supports-color": "5.5.0",
     "underscore": "1.9.1",
