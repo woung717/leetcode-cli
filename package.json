@@ -50,6 +50,7 @@
   },
   "homepage": "https://github.com/leetcode-tools/leetcode-cli#readme",
   "dependencies": {
+    "@puppeteer/browsers": "^2.1.0",
     "ansi-styles": "3.2.1",
     "cheerio": "0.20.0",
     "he": "1.2.0",
