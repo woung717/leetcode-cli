@@ -54,6 +54,7 @@
     "ansi-styles": "3.2.1",
     "cheerio": "0.20.0",
     "he": "1.2.0",
+    "http2-wrapper": "^2.2.1",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "nconf": "^0.11.2",
